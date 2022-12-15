@@ -1,0 +1,59 @@
+﻿@model ImageViewModel
+@{
+    ViewData["Title"] = "TOT Tool - Home Page";
+}
+<!-- ** BEGIN POP-UP MESSAGE AREA ** -->
+<div class="submit-progress hidden">
+    <i class="fa fa-2x fa-spinner fa-spin"></i>
+    <label>Please wait while Downloading...</label>
+</div>
+<!-- ** END POP-UP MESSAGE AREA ** -->
+<div class="container mt-2">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <h1 class="text-primary"><strong class="text-warning">TOOL DOWNLOAD IMAGE FROM URL</strong></h1>
+                <div style="height: 2px; width:100%; background-color: #1A1162;"></div>
+                <h6 class="text-danger">Note:</h6>
+                <ul class="list-unstyled text-start">
+                    <li>
+                        <h6 class="text-danger" style="font-size:1.15rem">
+                            1. Nhập đầy đủ theo định dạng URL (VD: https://toponseek.com/tenhinhanh.png)
+                        </h6>
+                    </li>
+                    <li>
+                        <h6 class="text-danger" style="font-size:1.15rem">
+                            2. Mỗi URL cách nhau bởi dấu xuống dòng
+                        </h6>
+                    </li>
+                </ul>
+                
+                <form method="post" asp-action="Index">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="text-center justify-content-center">
+                        <textarea asp-for="URL" type="text" class="form-control" rows="10"></textarea>
+                        <input id="btn-download" type="submit" value="Download" class="btn btn-outline-primary mt-4" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        var showLoader = function DisplayProgressMessage() {
+            $("body").addClass("submit-progress-bg");
+            $(".submit-progress").removeClass("hidden");
+            return true;
+        }
+
+        jQuery(document).ready(function () {
+            jQuery(window).on("beforeunload ", function () {
+                showLoader();
+            });
+        });
+    </script>
+}
